@@ -1,67 +1,94 @@
 import React, {useState,useEffect} from "react";
 import ItemPage from "./ItemPage"
 import {Route, BrowserRouter as Router, Switch} from "react-router-dom";
+import { useHistory } from "react-router-dom"; 
 import LoginForm from "./LoginForm"
 import NavBar from "./NavBar"
 import Cart from './Cart'
 import '../App.css'
-import {Elements} from '@stripe/react-stripe-js';
-import {loadStripe} from '@stripe/stripe-js';
 
 
 function App() {
-  const [user, setUser] = useState([])
+  // User logged in state
+  const [currentUser, setCurrentUser] = useState("")
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [currentUserId, setCurrentUserId] = useState(localStorage.getItem("userId"))
   const [orderId, setOrderId] = useState("")
-  const [newArr, setNewArr] = useState([])
-  const [itemOrders, setItemOrders] = useState([]); 
-  
+  console.log( "oderId", orderId)
+  // console.log("Order being placed:", currentOrder)
+  //refers to itemOrders in cart
+  const [cartItems, setCartItems] = useState([])
+  //refers to order
+  const [currentOrder, setCurrentOrder]= useState(null)
+  // const [newArr, setNewArr] = useState([])
+  const history = useHistory()
+  // console.log(localStorage.getItem("token"))
+
+  console.log(orderId)
+  console.log("currentOrder", currentOrder)
+
   useEffect(() => {
-  fetch('http://localhost:3000/users')
-  .then(res => res.json())
-  .then(users => setUser(users[0]))
-  },[])
-
-  function handleOrders(orders){
-    // console.log(orders)
-    if (!orders){
-      const openOrder = orders.filter((order) => order.checked_out === false)
-      let addToOrder = parseInt(openOrder[0].id)
-      setOrderId(addToOrder)
-    }else{
-      createNewOrder()
+    const token = localStorage.getItem("token");
+    console.log(token)
+    if (token) {
+      fetch("http://localhost:3000/profile", {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setCurrentUser(data.user);
+          // console.log("I am the current User", data.user)
+            setToken(data.token)
+            let oId = parseInt(localStorage.getItem("orderId"))
+            setOrderId(oId)
+            
+            if (data.user.orders.find(order => order.id === oId)) {
+                setCurrentOrder(data.user.orders.find(order => order.id === oId))
+            }
+        });
     }
+  }, []);
+
+  const handleLogin = (user) => {
+    setCurrentUser(user)
   }
-  console.log(user)
 
+  console.log( "cart items",cartItems)
 
-  useEffect(()=> {
-    fetch('http://localhost:3000/orders')
+  const addItemToCart = (item) => {
+    setCartItems([...cartItems, item])
+
+    fetch("http://localhost:3000/item_orders", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        item_id: item.id,
+        order_id: orderId
+      })
+    })
     .then(res => res.json())
-    .then((orders) => handleOrders(orders))
-  }, [])
-  /////////////////////////////// 
-
-
-
-
+    .then(data => {
+      console.log("inside the fetch", data)
+      fetch("http://localhost:3000/orders/" + orderId)
+      .then(res => res.json())
+      .then(data => {
+        setCurrentOrder(data)
+        console.log(data)
+      } )
+    })
+  }
 
   useEffect(()=> {
     fetch('http://localhost:3000/item_orders')
     .then(res => res.json())
-    .then(itemOrders => setItemOrders(itemOrders))
+    .then(cartItems => setCartItems(cartItems))
   }, [])
 
-  function addToCart(newOrder){
-    console.log(newOrder)
-    const newArr = [...itemOrders,newOrder]
-    console.log(newArr)
-     setItemOrders(newArr)
-  }
-
-function removeItemFromCart(itemOrder){
-  const newArr = itemOrders.filter((item) => item !== itemOrder) 
-  setItemOrders(newArr)
-}
+// function removeItemFromCart(itemOrder){
+//   const newArr = cartItems.filter((item) => item !== itemOrder) 
+//   setCartItems(newArr)
+// }
 
 function checkOut(){
 
@@ -78,8 +105,10 @@ function checkOut(){
   .then(response => response.json())
   .then(createNewOrder);
  
-  setItemOrders([])
+  setCartItems([])
 }
+
+// console.log("tracking number", currentOrder.tracking)
 
 function createNewOrder() {
   fetch("http://localhost:3000/orders", {
@@ -96,30 +125,41 @@ function createNewOrder() {
   })
   .then(response => response.json())
   .then(newOrder => setOrderId(newOrder.id)) 
-  // (newOrder) => addToCart(newOrder)
+  // (newOrder) => addItemToCart(newOrder)
 
 
 }
 
+  const handleLogOut = () => {
+    setCurrentUser("")
+    // setToken(null)
+    setCurrentUserId(null)
+    localStorage.removeItem("token")
+    localStorage.removeItem("userId")
+    localStorage.removeItem("orderId")
+    history.push("/")
+  }
 
 
 // console.log(orderId)
   return (
     <Router>
-      <NavBar user = {user}/>
-      
-      <Switch>
-        <Route exact path="/login">
-            <LoginForm user ={user} setUser={setUser}/>
-        </Route>
-          {/* <Route exact path="/login" component={LoginForm}/> */}
-          <Route exact path="/home" >
-            <ItemPage addToCart = {addToCart} orderId={orderId}/>
-          </Route>
-          <Route exact path="/carts" >
-            <Cart setItemOrders = {setItemOrders} itemOrders={itemOrders} addToCart = {addToCart} removeItemFromCart = {removeItemFromCart}checkOut = {checkOut}  />
-          </Route>
-      </Switch>
+      <NavBar currentUser={currentUser} handleLogOut={handleLogOut} currentOrder={currentOrder}/>
+        <Switch>
+            <Route exact path="/home">
+              <ItemPage addItemToCart={addItemToCart} orderId={orderId} setOrderId={setOrderId}/>
+            </Route>
+
+            <Route exact path="/carts" >
+              <Cart currentOrder={currentOrder} orderId={orderId} setCartItems={setCartItems} cartItems={cartItems} addItemToCart={addItemToCart} checkOut={checkOut}  />
+            </Route>
+
+            <Route exact path="/">
+              <LoginForm handleLogin={handleLogin} currentUserId={currentUserId} setCurrentUser={setCurrentUser} setCurrentUserId={setCurrentUserId} setOrderId={setOrderId} setCurrentOrder={setCurrentOrder}/>
+            </Route>
+
+
+        </Switch>
       </Router>
   );
 }

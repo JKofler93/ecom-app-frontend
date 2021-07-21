@@ -1,31 +1,86 @@
 
-.login {
-    background-color: white;
-    height: 100vh;
+.login-container {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 100px;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     align-items: center;
-}
-
-.login > h1 {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
-.login-button {
+    font-size: 14px;
     background-color: white;
-    border-radius: 2px;
+}
+
+.login-box {
+    max-width: 350px;
     width: 100%;
-    height: 30px;
-    border: 1px solid;
-    margin-top: 10px;
-    border-color: #000000 #000000 #000000;
-    color: black;
-    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #ffff;
+
+    margin: 0 0 10px;
+    padding: 10px 0;
+    flex-grow: 1;
 }
 
-.login > form > input {
-    height: 30px;
-    margin-bottom: 10px;
-    background-color: white;
-    width: 98%;
+.heading {
+    color: #180877;
 }
+
+.login-form-input {
+    /* padding: 9px 0px 7px 9px; */
+    /* font-size: 12px; */
+    width: 16rem;
+    height: 30px;
+    outline: none;
+    background: #fafafa;
+    border-radius: 3px;
+    border: 1px solid #180877;
+}
+
+.login-submit-button {
+    position: relative;
+    background-color: #180877;
+    border: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.login-submit-button:after {
+  content: "";
+  background: #f1f1f1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px !important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s;
+
+}
+
+.login-submit-button:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+}
+
+.login-button-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+

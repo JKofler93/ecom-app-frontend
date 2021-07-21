@@ -4,7 +4,7 @@ import Categories from "./Categories"
 import Cart from "./Cart" 
 import {Container, Header} from 'semantic-ui-react'
 
-function ItemPage({addToCart, orderId}){
+function ItemPage({addItemToCart, orderId}){
     const [items, setItems] = useState([])
     const [sidebar, setSidebar] = ['']
     const [category, setCategory] = useState("")
@@ -30,14 +30,13 @@ function ItemPage({addToCart, orderId}){
     const categoriedItems = items.filter(item => item.category.includes(category))
     // console.log(categoriedItems)
     return (
-        <>
+        <div>
         <Container textAlign='center'>
-        <Header as='h1'  >Clothzilla</Header>
+        <Header as='h1'>Clothzilla</Header>
         </Container>
-                <Categories category = {category} setCategory = {setCategory}/>
-                <ItemCollection items={categoriedItems} orderId={orderId} user = {user} addToCart = {addToCart}/>
-       
-        </>
+            <Categories category={category} setCategory={setCategory}/>
+            <ItemCollection items={categoriedItems} orderId={orderId} user={user} addItemToCart={addItemToCart} />
+        </div>
     )
 }
 export default ItemPage;

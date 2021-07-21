@@ -1,39 +1,11 @@
 import React, {useState} from "react"
+import { RiCollageFill } from "react-icons/ri"
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 
-function CartItem({item,order,orderStatus, itemOrder, removeItemFromCart}){
-   const [checkedOut, setCheckedOut] = useState(order.checked_out)
+function CartItem({item, order, orderStatus, itemOrder}){
+  //  const [checkedOut, setCheckedOut] = useState(order.checked_out)
 
-    function handleCheckout(){
-      // setCheckedOut(!checkedOut)
-      console.log(order)
-
-      // fetch(`http://localhost:3001/order/${order.id}`, {
-      //   method: 'PATCH',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({
-      //     checkedOut: (true),
-      //   }
-      //   ),
-      // })
-      // .then(response => response.json())
-      // .then(data => {
-      //   setLikes([newLikeCount]);
-      // })
-      
-    }
- 
-    function handleRemove(){
-
-        // console.log(itemOrder.id)}
-      fetch(`http://localhost:3000/item_orders/${itemOrder.id}` , {
-        method: 'DELETE',
-      })
-    removeItemFromCart(itemOrder)
-    }
 
      return(
       <Card>
@@ -46,15 +18,8 @@ function CartItem({item,order,orderStatus, itemOrder, removeItemFromCart}){
             <Card.Meta>{item.name}</Card.Meta>
             <br></br>
 
-            <Card.Description>${item.price}</Card.Description>
+            <Card.Description>${item.cost}</Card.Description>
           </Card.Content>
-
-          <Button onClick={handleRemove} animated>
-            <Button.Content visible>Remove From Cart</Button.Content>
-            <Button.Content hidden>
-              <Icon name='cart arrow down' />
-            </Button.Content>
-          </Button>
       </Card>
      )
    }

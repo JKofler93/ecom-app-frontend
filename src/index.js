@@ -3,12 +3,18 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import './index.css';
 import 'semantic-ui-css/semantic.min.css';
+import {Elements} from "@stripe/react-stripe-js"
+import {loadStripe} from "@stripe/stripe-js"
 //import reportWebVitals from './reportWebVitals';
+
+const stripePromise = loadStripe("pk_test_51IaO1jGHXlKuOp6FfPCXYzUhqWF3xQAFL5WCdsfCM6wmwxUHhznNNXcUxqxs6OvYyUWiyHUyHlm0IV0OG1HQsHke00NnsUNTfD")
 
 
 ReactDOM.render(
-  // <React.StrictMode>
-    <App />,
+  <React.StrictMode>
+  <Elements stripe={stripePromise}>
+    <App/>
+  </Elements>
   // </React.StrictMode>,
   document.getElementById('root')
 );

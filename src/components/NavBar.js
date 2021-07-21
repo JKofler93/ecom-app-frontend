@@ -1,50 +1,22 @@
-import { NavLink } from "react-router-dom"
+import React from "react"
 import '../components/css/navbar.css';
-import { Menu } from 'semantic-ui-react'
+import { RiShoppingCart2Line } from 'react-icons/ri';
 
-const square = { width: 175, height: 175 }
+// const square = { width: 175, height: 175 }
 
-function NavBar({user}) {
+function NavBar({ currentUser, handleLogOut }) {
 
     return (
-        <>
-            <Menu>
-                <Menu.Item position="center">
-                    <NavLink
-                        to="/home"
-                        exact
-                    >
-                        Home
-                    </NavLink>
-                </Menu.Item >
-
-                <Menu.Item >
-                    <NavLink
-                        to="/carts"
-                        exact
-                    >
-                        View Cart
-                    </NavLink>
-                    
-                </Menu.Item>
-                <Menu.Item position= "right">
-                    <NavLink
-                        to="/login"
-                        exact
-                    >
-                        Logout 
-                    </NavLink>
-                    
-                </Menu.Item>
-            
-
-
-
-
-            </Menu>
-
-            
-        </>
+        <div className="navbar">
+            <a className="home-button" href="/home">Home</a>
+            <a className="cart-button" href="/carts"><RiShoppingCart2Line/></a> 
+            {
+            currentUser ? 
+                <a className="logout-button" href="/" onClick={handleLogOut}>Logout</a>
+            :
+                <a className="logout-button" href="/">Log In</a>
+            }
+        </div>
     )
 }
 

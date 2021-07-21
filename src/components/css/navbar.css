@@ -1,32 +1,24 @@
-.topnav {
-    background-color: #000000;
-    overflow: hidden;
-    opacity: 75%;
+.navbar{ 
+    background-color: #180877;
+    height: 80px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 50px;
+    box-sizing: border-box;
+    z-index: 2;
+    /* animation magic */
+    transition: all 0.4s ease-in-out;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out; 
 }
 
-.topnav > h1 {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    float: left;
-    color: #f2f2f2;
-    padding: 1px 30px;
-    text-decoration: solid;
-    font-size: 30px;
-}
-
-.topnav > h4 {
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    float: center;
-    color: #f2f2f2;
-    padding: 1px 30px;
-    text-decoration: solid;
-    font-size: 20px;
-}
-
-
-.topnav a {
-    float: left;
-    color: #f2f2f2;
-    padding: 5px 5px;
-    text-decoration: none;
-    font-size: 20px;
+.cart-button,
+.home-button,
+.logout-button {
+    font-size: 25px;
 }
