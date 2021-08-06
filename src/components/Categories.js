@@ -5,39 +5,39 @@ function Categories({ category, setCategory }) {
     // const [category, setCategory] = useState("")
     //  console.log(category)
 
-    function handlePants(){
-        setCategory("Pants")
+    function handleMonitors(){
+        setCategory("Monitors")
         // filterCategory("Pants")
     }
 
-    function handleShirts(){
-        setCategory("Shirt")
+    function handleLaptops(){
+        setCategory("Laptops")
         // filterCategory("Shirts")
     }
 
-    function handleShoes(){
-        setCategory("Shoes")
+    function handlePhones(){
+        setCategory("Phones")
         // filterCategory("Shoes")
     }
     return(
         <Container textAlign='center'>
 
-            <Button onClick={handlePants} animated>
-                <Button.Content visible>Pants</Button.Content>
+            <Button onClick={handleMonitors} animated>
+                <Button.Content visible>Monitors</Button.Content>
                     <Button.Content hidden>
                         <Icon name='star' />
                     </Button.Content>
             </Button>
 
-            <Button onClick={handleShirts} animated>
-                <Button.Content visible>Shirts</Button.Content>
+            <Button onClick={handleLaptops} animated>
+                <Button.Content visible>Laptops</Button.Content>
                     <Button.Content hidden>
                         <Icon name='star' />
                     </Button.Content>
             </Button>
 
-            <Button onClick={handleShoes} animated>
-                <Button.Content visible>Shoes</Button.Content>
+            <Button onClick={handlePhones} animated>
+                <Button.Content visible>Phones</Button.Content>
                     <Button.Content hidden>
                         <Icon name='star' />
                     </Button.Content>

@@ -32,7 +32,7 @@ function ItemPage({addItemToCart, orderId}){
     return (
         <div>
         <Container textAlign='center'>
-        <Header as='h1'>Clothzilla</Header>
+        <Header as='h1'>Techzilla</Header>
         </Container>
             <Categories category={category} setCategory={setCategory}/>
             <ItemCollection items={categoriedItems} orderId={orderId} user={user} addItemToCart={addItemToCart} />

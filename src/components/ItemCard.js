@@ -31,17 +31,19 @@ function ItemCard({item, orderId, addItemToCart}){
   const handleItemAdd = () => {
     addItemToCart(item)
   }
+  
   return(
       <Card>
           <Card.Content >
-            <Image src={item.image} height='150' width='150' alt={item.name}/>
-            <br></br>
+            <Image src={item.image} height='100' width='125' alt={item.name}/>
             <br></br>
             <Card.Header>{item.brand}</Card.Header>
-            <Card.Description>${item.cost}</Card.Description>
             <br></br>
             <Card.Meta>{item.name}</Card.Meta>
             <br></br>
+            <Card.Meta>{item.description}</Card.Meta>
+            <br></br>
+            <Card.Description>${item.cost}</Card.Description>
           </Card.Content>
           { location.pathname === "/carts"
           

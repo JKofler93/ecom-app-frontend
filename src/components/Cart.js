@@ -103,7 +103,7 @@ function Cart({ orderId, currentOrder, setCartItems, cartItems, checkOut}) {
     }else {
         return(
             <div>
-                Loading...
+                {/* Loading... */}
             </div>
         )
     }
